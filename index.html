@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ERAS Digital Learning</title>
+<style>
+:root{--bg:#fff;--card:#fff;--ink:#16241b;--mute:#5b6b60;--line:#e6ece6;--pri:#2f8f5b;--pri2:#e8f5ed;--ok:#1f8a4c;--bad:#c2410c;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+header{padding:32px 26px;margin-top:8px;border-radius:22px;background:linear-gradient(135deg,#2f8f5b,#5cc08b);color:#fff;box-shadow:0 12px 32px rgba(47,143,91,.28)}
+.badge{display:inline-block;background:rgba(255,255,255,.22);padding:3px 12px;border-radius:99px;font-size:12px;font-weight:600;margin-bottom:12px}
+h1{font:700 34px/1.15 Georgia,"Times New Roman",serif;margin:0 0 8px}
+p.sub{margin:0;color:rgba(255,255,255,.93)}
+nav{display:flex;gap:6px;margin:22px 0;padding:5px;background:#f1f6f3;border-radius:14px}
+nav button{flex:1;background:none;border:0;padding:11px 10px;border-radius:10px;font-weight:600;font-size:15px;font-family:inherit;color:var(--mute);cursor:pointer;transition:.2s}
+nav button.on{background:#fff;color:var(--pri);box-shadow:0 2px 8px rgba(22,36,27,.1)}
+.card{background:#fff;border:1px solid var(--line);border-top:4px solid var(--pri);border-radius:18px;padding:20px;box-shadow:0 4px 18px rgba(22,36,27,.06);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(22,36,27,.12)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:12px;padding:11px 18px;font-weight:600;font-size:15px;font-family:inherit;cursor:pointer;box-shadow:0 4px 12px rgba(47,143,91,.25);transition:transform .15s}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn.ghost{background:var(--pri2);color:var(--pri);box-shadow:none}
+.btn:disabled{opacity:.5;cursor:default}
+.tag{display:inline-block;background:var(--pri2);color:var(--pri);font-size:12px;font-weight:600;border-radius:99px;padding:2px 10px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.ok{border-color:var(--ok);background:var(--pri2)}
+.opt.bad{border-color:var(--bad)}
+.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin:10px 0 16px}
+.bar i{display:block;height:100%;background:var(--pri);transition:width .3s}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+input[type=search]{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 14px;font:inherit;font-size:14px;cursor:pointer}
+.chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.big{font:700 44px/1 Georgia,serif;color:var(--pri)}
+.exp{margin-top:10px;padding:10px 12px;background:var(--pri2);border-radius:10px;font-size:14px}
+h3{margin:8px 0 4px;font-size:17px}
+.mute{color:var(--mute);font-size:14px}
+details{margin:8px 0 14px}summary{cursor:pointer;color:var(--pri);font-weight:600;font-size:14px}ol.m{margin:8px 0 0;padding-left:20px;font-size:14px;color:var(--mute)}
+.timer{font-weight:700;color:var(--pri)}.timer.low{color:var(--bad)}
+.h{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}.h .b{flex:1;height:8px;background:var(--line);border-radius:9px;overflow:hidden}.h .b i{display:block;height:100%;background:var(--pri)}
+footer{margin-top:36px;text-align:center;color:var(--mute);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="badge">Platform belajar digital</span>
+  <h1>ERAS Digital Learning</h1>
+  <p class="sub">Latihan tes, kelas, dan template siap pakai untuk belajar dan berkarier.</p>
+</header>
+<nav>
+  <button id="t-tes" class="on" onclick="tab('tes')">Latihan Tes</button>
+  <button id="t-tpl" onclick="tab('tpl')">Template</button>
+  <button id="t-kls" onclick="tab('kls')">Kelas</button>
+</nav>
+<main id="app"></main>
+<footer>© ERAS Digital Learning</footer>
+</div>
+<script>
+// ===== DATA (ubah di sini untuk menambah soal / template) =====
+const SOAL = {
+  "Logika": [
+    {q:"Semua kucing adalah hewan. Mimi adalah kucing. Kesimpulan yang benar?",o:["Mimi bukan hewan","Mimi adalah hewan","Semua hewan adalah kucing","Mimi mungkin bukan kucing"],a:1,e:"Silogisme: kucing ⊂ hewan, Mimi ∈ kucing, maka Mimi ∈ hewan."},
+    {q:"Lanjutkan pola: 2, 6, 12, 20, 30, ...",o:["38","40","42","44"],a:2,e:"Selisihnya 4, 6, 8, 10, lalu 12. Jadi 30 + 12 = 42."},
+    {q:"Andi lebih tinggi dari Budi. Budi lebih tinggi dari Caca. Siapa yang paling pendek?",o:["Andi","Budi","Caca","Tidak bisa ditentukan"],a:2,e:"Urutan tinggi: Andi > Budi > Caca."},
+    {q:"Jika hari ini Rabu, 10 hari lagi hari apa?",o:["Jumat","Sabtu","Minggu","Senin"],a:1,e:"10 mod 7 = 3, Rabu + 3 hari = Sabtu."},
+    {q:"Buku : Membaca = Pensil : ...",o:["Menulis","Menghapus","Tajam","Kayu"],a:0,e:"Buku digunakan untuk membaca, pensil digunakan untuk menulis."}
+  ],
+  "Numerik": [
+    {q:"25% dari 480 adalah ...",o:["100","110","120","130"],a:2,e:"480 × 0,25 = 120."},
+    {q:"Harga barang Rp200.000 diskon 15%. Harga akhir?",o:["Rp170.000","Rp175.000","Rp180.000","Rp185.000"],a:0,e:"Diskon Rp30.000, jadi 200.000 − 30.000 = 170.000."},
+    {q:"Rata-rata dari 70, 80, 90, 100 adalah ...",o:["80","85","90","95"],a:1,e:"Jumlah 340 dibagi 4 = 85."},
+    {q:"Mobil melaju 60 km/jam selama 2,5 jam. Jarak tempuh?",o:["120 km","140 km","150 km","160 km"],a:2,e:"60 × 2,5 = 150 km."},
+    {q:"Perbandingan 3 : 5 dengan total 160. Bagian yang lebih besar?",o:["60","80","100","120"],a:2,e:"Satu bagian = 160/8 = 20, jadi 5 × 20 = 100."}
+  ],
+  "Verbal": [
+    {q:"Sinonim kata “efisien” adalah ...",o:["Boros","Hemat waktu dan tenaga","Lambat","Rumit"],a:1,e:"Efisien berarti tepat guna tanpa membuang waktu atau tenaga."},
+    {q:"Antonim kata “transparan” adalah ...",o:["Jelas","Terbuka","Tertutup","Bening"],a:2,e:"Transparan berarti terbuka, lawannya tertutup."},
+    {q:"Kalimat yang baku adalah ...",o:["Dia mengerjakan tugas dengan sungguh2","Saya telah mengirim laporan itu","Anda silahkan duduk","Mereka mengobrol dirumah"],a:1,e:"Opsi lain salah: “sungguh-sungguh”, “silakan”, dan “di rumah”."},
+    {q:"Dokter : Rumah Sakit = Guru : ...",o:["Murid","Sekolah","Buku","Pelajaran"],a:1,e:"Dokter bekerja di rumah sakit, guru bekerja di sekolah."},
+    {q:"Makna “bekerja keras bagai kuda” adalah ...",o:["Bekerja tanpa lelah","Bekerja sambil berlari","Bekerja malas","Bekerja sendirian"],a:0,e:"Peribahasa ini menggambarkan orang yang bekerja gigih tanpa banyak mengeluh."}
+  ],
+  "Excel": [
+    {q:"Fungsi untuk mencari nilai di kolom pertama tabel lalu mengambil data dari kolom lain adalah ...",o:["SUMIF","VLOOKUP","COUNTA","ROUND"],a:1,e:"VLOOKUP mencari nilai di kolom paling kiri tabel dan mengembalikan data dari kolom yang ditentukan."},
+    {q:"Rumus untuk menjumlahkan sel A1:A10 yang nilainya lebih dari 100 adalah ...",o:['=SUM(A1:A10>100)','=SUMIF(A1:A10,">100")','=COUNTIF(A1:A10,">100")','=IF(A1:A10>100)'],a:1,e:"SUMIF menjumlahkan sel yang memenuhi kriteria. COUNTIF hanya menghitung banyaknya."},
+    {q:"Menekan F4 saat mengedit rumus akan menghasilkan referensi ...",o:["Absolut ($A$1)","Relatif (A1)","Nama range","Antar sheet"],a:0,e:"F4 mengunci baris dan kolom (absolut), dan menekannya lagi bergantian ke mode campuran."},
+    {q:"Fitur untuk merangkum data besar menjadi ringkasan yang bisa diubah-ubah adalah ...",o:["Conditional Formatting","Data Validation","PivotTable","Freeze Panes"],a:2,e:"PivotTable merangkum dan mengelompokkan data tanpa mengubah data aslinya."}
+  ],
+  "FAT": [
+    {q:"Persamaan dasar akuntansi adalah ...",o:["Aset = Kewajiban + Ekuitas","Aset = Kewajiban − Ekuitas","Ekuitas = Aset + Kewajiban","Kewajiban = Aset + Ekuitas"],a:0,e:"Aset dibiayai oleh kewajiban (utang) dan ekuitas (modal pemilik)."},
+    {q:"Aset Rp12.000.000, nilai residu Rp2.000.000, umur 5 tahun. Penyusutan garis lurus per tahun?",o:["Rp2.000.000","Rp2.400.000","Rp2.500.000","Rp10.000.000"],a:0,e:"(12.000.000 − 2.000.000) / 5 = 2.000.000 per tahun."},
+    {q:"Pajak atas penghasilan karyawan yang dipotong oleh pemberi kerja adalah PPh pasal ...",o:["21","22","23","25"],a:0,e:"PPh 21 dipotong atas gaji, upah, dan penghasilan terkait pekerjaan."},
+    {q:"Aset lancar Rp300 juta dan utang lancar Rp200 juta. Rasio lancar (current ratio)?",o:["0,67","1,5","2","3"],a:1,e:"Rasio lancar = aset lancar / utang lancar = 300 / 200 = 1,5."}
+  ],
+  "Procurement": [
+    {q:"Dokumen yang dikirim ke pemasok untuk memesan barang secara resmi adalah ...",o:["Purchase Requisition","Purchase Order","Goods Receipt","Invoice"],a:1,e:"PR adalah permintaan internal, sedangkan PO adalah pesanan resmi ke pemasok."},
+    {q:"Three-way matching mencocokkan ...",o:["PO, GR, dan invoice","PR, PO, dan kontrak","GR, retur, dan nota kredit","Invoice, jurnal, dan laporan"],a:0,e:"Pembayaran baru diproses jika pesanan, penerimaan barang, dan tagihan cocok."},
+    {q:"EOQ (Economic Order Quantity) digunakan untuk menentukan ...",o:["Harga terendah pemasok","Jumlah pesanan yang meminimalkan total biaya persediaan","Waktu pengiriman tercepat","Jumlah pemasok"],a:1,e:"EOQ menyeimbangkan biaya pemesanan dan biaya penyimpanan."},
+    {q:"RFQ (Request for Quotation) adalah ...",o:["Permintaan penawaran harga kepada pemasok","Laporan penerimaan barang","Bukti pembayaran","Perjanjian kontrak kerja"],a:0,e:"RFQ dikirim ke beberapa pemasok untuk membandingkan harga dan syarat."}
+  ]
+};
+const TPL = [
+  {n:"Template CV ATS Friendly",k:"Karier",d:"CV satu halaman yang mudah dibaca sistem rekrutmen.",f:"Word"},
+  {n:"Surat Lamaran Kerja",k:"Karier",d:"Format surat lamaran formal siap isi.",f:"Word"},
+  {n:"Planner Belajar Mingguan",k:"Belajar",d:"Jadwal, target, dan evaluasi belajar per minggu.",f:"PDF"},
+  {n:"Tracker Nilai dan Tugas",k:"Belajar",d:"Pantau tugas, tenggat, dan nilai semester.",f:"Excel"},
+  {n:"Budget Bulanan Pribadi",k:"Keuangan",d:"Catat pemasukan, pengeluaran, dan tabungan.",f:"Excel"},
+  {n:"Tracker Utang dan Cicilan",k:"Keuangan",d:"Pantau sisa utang dan jatuh tempo.",f:"Excel"},
+  {n:"To-Do dan Prioritas Harian",k:"Produktivitas",d:"Matriks prioritas dan daftar tugas harian.",f:"PDF"},
+  {n:"Habit Tracker 30 Hari",k:"Produktivitas",d:"Bangun kebiasaan baru dengan pantauan harian.",f:"PDF"},
+  {n:"Notulen Rapat",k:"Produktivitas",d:"Format catatan rapat dan tindak lanjut.",f:"Word"}
+];
+// Isi "link" (URL produk di Lynk.id) pada template atau kelas agar tombol beli/daftar aktif.
+const KELAS = [
+  {n:"Kelas Excel untuk Kerja",lv:"Pemula–Menengah",c:"Excel",link:"",d:"Dari rumus dasar sampai dashboard laporan yang siap dipakai di kantor.",m:["Dasar Excel dan format data","Rumus logika dan lookup (IF, VLOOKUP, XLOOKUP)","SUMIF, COUNTIF, dan rekap data","PivotTable dan grafik","Dashboard laporan bulanan"]},
+  {n:"Kelas FAT (Finance, Accounting, Tax)",lv:"Pemula–Menengah",c:"FAT",link:"",d:"Dasar keuangan, akuntansi, dan perpajakan untuk staf administrasi dan keuangan.",m:["Siklus akuntansi dan jurnal","Menyusun laporan keuangan","Analisis rasio keuangan dasar","Dasar perpajakan (PPh 21 dan PPN)"]},
+  {n:"Kelas Procurement",lv:"Pemula–Menengah",c:"Procurement",link:"",d:"Alur pengadaan dari permintaan sampai pembayaran, dengan contoh dokumen.",m:["Siklus procure-to-pay","Memilih dan mengevaluasi pemasok","RFQ, negosiasi, dan PO","Pengendalian persediaan dan EOQ","Three-way matching dan pembayaran"]}
+];
+
+const IC={"Logika":"🧩","Numerik":"🔢","Verbal":"💬","Excel":"📊","FAT":"🧾","Procurement":"📦"};
+// ===== STATE =====
+let cur="tes", S={view:"menu"}, filt="Semua", qry="";
+const app=document.getElementById("app");
+const best=()=>{try{return JSON.parse(localStorage.getItem("eras-best")||"{}")}catch(e){return {}}};
+const saveBest=(c,v)=>{try{const b=best();if(!(b[c]>=v)){b[c]=v;localStorage.setItem("eras-best",JSON.stringify(b))}}catch(e){}};
+const hist=()=>{try{return JSON.parse(localStorage.getItem("eras-hist")||"[]")}catch(e){return []}};
+const addHist=(c,p)=>{try{const h=hist();h.unshift({c,p,t:Date.now()});localStorage.setItem("eras-hist",JSON.stringify(h.slice(0,30)))}catch(e){}};
+const clearHist=()=>{try{localStorage.removeItem("eras-hist")}catch(e){}tes()};
+let TM=true,tick=null;
+const stop=()=>{clearInterval(tick);tick=null};
+const fmt=s=>Math.floor(Math.max(s,0)/60)+":"+String(Math.max(s,0)%60).padStart(2,"0");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function tab(t){stop();cur=t;["tes","tpl","kls"].forEach(x=>document.getElementById("t-"+x).className=x===t?"on":"");t==="tes"?(S={view:"menu"},tes()):t==="tpl"?tpl():kls()}
+
+// ===== LATIHAN TES =====
+function tes(){
+  if(S.view==="menu"){
+    const b=best();
+    app.innerHTML=`<div class="grid">`+Object.keys(SOAL).map(c=>`<div class="card"><div style="font-size:32px;margin-bottom:6px">${IC[c]||"📘"}</div><span class="tag">${SOAL[c].length} soal</span><h3>${c}</h3><p class="mute">${b[c]!=null?"Skor terbaik: "+b[c]+"%":"Belum pernah dicoba"}</p><button class="btn" onclick="mulai('${c}')">Mulai</button></div>`).join("")+`</div><label class="mute" style="display:block;margin:16px 0"><input type="checkbox" ${TM?"checked":""} onchange="TM=this.checked"> Aktifkan timer (45 detik per soal)</label>`+riwayat();
+  } else if(S.view==="q"){
+    const q=S.qs[S.i],pct=Math.round(S.i/S.qs.length*100);
+    app.innerHTML=`<div class="card"><div class="row"><span class="tag">${S.c}</span>${TM?'<span class="timer" id="tm">'+fmt(S.left)+'</span>':''}<span class="mute">Soal ${S.i+1} dari ${S.qs.length}</span></div><div class="bar"><i style="width:${pct}%"></i></div><h3>${esc(q.q)}</h3>`+
+      q.o.map((o,k)=>`<button class="opt ${S.done?(k===q.a?"ok":(k===S.pick?"bad":"")):""}" ${S.done?"disabled":""} onclick="jawab(${k})">${esc(o)}</button>`).join("")+
+      (S.done?`<div class="exp"><b>${S.pick===q.a?"Benar.":"Kurang tepat."}</b> ${esc(q.e)}</div><p><button class="btn" onclick="lanjut()">${S.i+1<S.qs.length?"Soal berikutnya":"Lihat hasil"}</button></p>`:"")+`</div>`;
+  } else {
+    const p=Math.round(S.s/S.qs.length*100);
+    app.innerHTML=`<div class="card" style="text-align:center"><p class="mute">Hasil ${S.c}${S.out?" (waktu habis)":""}</p><div class="big">${p}%</div><p>${S.s} dari ${S.qs.length} soal benar. ${p>=80?"Sangat baik!":p>=60?"Cukup baik, terus berlatih.":"Ulangi dan pelajari pembahasannya."}</p><button class="btn" onclick="mulai('${S.c}')">Ulangi</button> <button class="btn ghost" onclick="S={view:'menu'};tes()">Menu tes</button></div>`;
+  }
+}
+function mulai(c){stop();const qs=[...SOAL[c]].sort(()=>Math.random()-.5);S={view:"q",c,qs,i:0,s:0,done:false,pick:-1,left:qs.length*45,out:false};tes();if(TM)tick=setInterval(()=>{S.left--;const e=document.getElementById("tm");if(e){e.textContent=fmt(S.left);e.className="timer"+(S.left<=15?" low":"")}if(S.left<=0){S.out=true;selesai()}},1000)}
+function selesai(){stop();S.view="hasil";const p=Math.round(S.s/S.qs.length*100);saveBest(S.c,p);addHist(S.c,p);tes()}
+function jawab(k){if(S.done)return;S.pick=k;S.done=true;if(k===S.qs[S.i].a)S.s++;tes()}
+function lanjut(){if(S.i+1<S.qs.length){S.i++;S.done=false;S.pick=-1;tes()}else selesai()}
+
+// ===== TEMPLATE =====
+function tpl(){
+  const ks=["Semua",...new Set(TPL.map(t=>t.k))];
+  const list=TPL.filter(t=>(filt==="Semua"||t.k===filt)&&(t.n+t.d).toLowerCase().includes(qry.toLowerCase()));
+  app.innerHTML=`<input type="search" id="cari" placeholder="Cari template..." value="${esc(qry)}"><div class="chips">`+
+    ks.map(k=>`<button class="chip ${k===filt?"on":""}" onclick="filt='${k}';tpl()">${k}</button>`).join("")+`</div><div class="grid">`+
+    (list.length?list.map(t=>`<div class="card"><div class="row"><span class="tag">${t.k}</span><span class="mute">${t.f}</span></div><h3>${esc(t.n)}</h3><p class="mute">${esc(t.d)}</p>${t.link?`<a class="btn" style="text-decoration:none;display:inline-block" href="${esc(t.link)}" target="_blank" rel="noopener">Beli di Lynk.id</a>`:`<button class="btn ghost" disabled>Segera hadir</button>`}</div>`).join(""):`<p class="mute">Template tidak ditemukan.</p>`)+`</div>`;
+  const i=document.getElementById("cari");
+  i.addEventListener("input",e=>{qry=e.target.value;const p=e.target.selectionStart;tpl();const n=document.getElementById("cari");n.focus();n.setSelectionRange(p,p)});
+}
+// ===== RIWAYAT =====
+function riwayat(){
+  const h=hist();
+  if(!h.length)return `<div class="card" style="margin-top:8px"><b>Riwayat skor</b><p class="mute">Belum ada riwayat. Selesaikan satu tes untuk mulai mencatat.</p></div>`;
+  const tgl=t=>new Date(t).toLocaleDateString("id-ID",{day:"numeric",month:"short"});
+  return `<div class="card" style="margin-top:8px"><div class="row"><b>Riwayat skor</b><button class="btn ghost" onclick="clearHist()">Hapus</button></div>`+h.slice(0,8).map(x=>`<div class="h"><span style="width:84px">${esc(x.c)}</span><span class="b"><i style="width:${x.p}%"></i></span><b style="width:42px;text-align:right">${x.p}%</b><span class="mute" style="width:48px;text-align:right">${tgl(x.t)}</span></div>`).join("")+`</div>`;
+}
+// ===== KELAS =====
+function kls(){
+  app.innerHTML=`<div class="grid">`+KELAS.map(k=>`<div class="card"><div style="font-size:32px;margin-bottom:6px">${IC[k.c]||"📘"}</div><span class="tag">${k.lv}</span><h3>${esc(k.n)}</h3><p class="mute">${esc(k.d)}</p><details><summary>Materi kelas</summary><ol class="m">${k.m.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></details><div class="row" style="justify-content:flex-start">${k.link?`<a class="btn" style="text-decoration:none;display:inline-block" href="${esc(k.link)}" target="_blank" rel="noopener">Daftar di Lynk.id</a>`:`<button class="btn ghost" disabled>Segera hadir</button>`}<button class="btn ghost" onclick="latih('${k.c}')">Latihan soal</button></div></div>`).join("")+`</div>`;
+}
+function latih(c){tab('tes');mulai(c)}
+tes();
+</script>
+</body>
+</html>
